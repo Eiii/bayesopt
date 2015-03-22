@@ -34,13 +34,6 @@ namespace bayesopt
   BayesOptBase::BayesOptBase(size_t dim, bopt_params parameters):
     mParameters(parameters), mDims(dim)
   {
-    // Random seed
-    if (mParameters.random_seed < 0) mParameters.random_seed = std::time(0); 
-    mEngine.seed(mParameters.random_seed);
-
-    // Posterior surrogate model
-    mModel.reset(PosteriorModel::create(dim,parameters,mEngine));
-    
     // Setting verbose stuff (files, levels, etc.)
     int verbose = mParameters.verbose_level;
     if (verbose>=3)
@@ -59,6 +52,13 @@ namespace bayesopt
 	FILELog::ReportingLevel() = logERROR; break;
       }
 
+    // Random seed
+    if (mParameters.random_seed < 0) mParameters.random_seed = std::time(0); 
+    mEngine.seed(mParameters.random_seed);
+
+    // Posterior surrogate model
+    mModel.reset(PosteriorModel::create(dim,parameters,mEngine));
+    
     // Configure iteration parameters
     if (mParameters.n_init_samples <= 0)
       {
