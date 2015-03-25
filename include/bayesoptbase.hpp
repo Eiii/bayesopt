@@ -124,6 +124,11 @@ namespace bayesopt {
      */  
     void stepOptimization();
 
+    /** 
+     * \brief TODO
+     */  
+    void stepBatchOptimization(int width);
+
     /** Initialize the optimization process.  */
     void initializeOptimization();
 
@@ -195,6 +200,13 @@ namespace bayesopt {
      * @return next point to evaluate
      */
     vectord nextPoint();  
+
+    /** 
+     * \brief TODO
+     * 
+     * @return next points to evaluate
+     */
+    vecOfvec nextBatchPoints(int width);  
 
   };
 

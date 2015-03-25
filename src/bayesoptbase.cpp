@@ -120,6 +120,56 @@ namespace bayesopt
     mCurrentIter++;
   }
 
+  void BayesOptBase::stepBatchOptimization(int width)
+  {
+    // Find what is the next point.
+    vecOfvec xNexts = nextBatchPoints(width); //TODO
+
+    for(int i = 0; i < width; i++)
+      {
+        vectord xNext = xNexts[i];
+        double yNext = evaluateSampleInternal(xNext);
+
+        mModel->addSample(xNext,yNext);
+        mModel->updateCriteria(xNext);
+
+        plotStepData(mCurrentIter,xNext,yNext); //TODO -- Fix up stuff so this output makes sense
+      }
+
+    // Update surrogate model
+    bool retrain = ((mParameters.n_iter_relearn > 0) && 
+		    ((mCurrentIter + 1) % mParameters.n_iter_relearn == 0));
+
+    if (retrain)  // Full update
+      {
+        mModel->updateHyperParameters();
+        mModel->fitSurrogateModel();
+      }
+    else          // Incremental update
+      {
+        mModel->updateSurrogateModel();
+      } 
+
+    mCurrentIter++;
+  }
+
+  vecOfvec BayesOptBase::nextBatchPoints(int width)
+  {
+    vecOfvec result;
+    boost::shared_ptr<PosteriorModel> selectionModel = mModel->copy();
+
+    for(int i = 0; i < width; i++)
+      {
+        vectord xNext = nextPoint(); 
+        double yNext = 0.0; //TODO GET MEAN @ xNEXT
+
+        selectionModel->addSample(xNext, yNext);
+        selectionModel->updateCriteria(xNext); //TODO - necessary?
+      }
+
+    return result;
+  }
+
   void BayesOptBase::initializeOptimization()
   {
     size_t nSamples = mParameters.n_init_samples;
