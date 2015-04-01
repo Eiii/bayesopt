@@ -131,7 +131,8 @@ namespace bayesopt
         double yNext = evaluateSampleInternal(xNext);
 
         mModel->addSample(xNext,yNext);
-        mModel->updateCriteria(xNext);
+        mModel->updateSurrogateModel(); //TODO -- Does having these here make sense? Without update
+        mModel->updateCriteria(xNext);  //surrogate, it crashes
 
         plotStepData(mCurrentIter,xNext,yNext); //TODO -- Fix up stuff so this output makes sense
       }
@@ -145,10 +146,6 @@ namespace bayesopt
         mModel->updateHyperParameters();
         mModel->fitSurrogateModel();
       }
-    else          // Incremental update
-      {
-        mModel->updateSurrogateModel();
-      } 
 
     mCurrentIter++;
   }
@@ -161,6 +158,7 @@ namespace bayesopt
     for(size_t i = 0; i < width; i++)
       {
         vectord xNext = nextPoint(); 
+        result.push_back(xNext);
         double yNext = selectionModel->getMean(xNext);
 
         selectionModel->addSample(xNext, yNext);
