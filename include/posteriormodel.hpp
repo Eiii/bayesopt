@@ -71,6 +71,7 @@ namespace bayesopt {
     virtual std::string getBestCriteria(vectord& best) = 0;
 
 
+    PosteriorModel* clone(randEngine& eng);
     void setSamples(const matrixd &x, const vectord &y);
     void setSample(const vectord &x, double y);
     void addSample(const vectord &x, double y);

@@ -47,6 +47,16 @@ namespace bayesopt
       } 
   };
 
+  void Dataset::setSamples(const vecOfvec &x, const vectord &y)
+  {
+    mY = y;
+    for (size_t i=0; i<x.size(); ++i)
+      {
+        mX.push_back(x[i]);
+        updateMinMax(i);
+      }
+  }
+
 
   void Dataset::plotData(TLogLevel level)
   {
