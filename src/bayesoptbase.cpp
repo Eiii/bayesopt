@@ -123,7 +123,7 @@ namespace bayesopt
   void BayesOptBase::stepBatchOptimization(int width)
   {
     // Find what is the next point.
-    vecOfvec xNexts = nextBatchPoints(width); //TODO
+    vecOfvec xNexts = nextBatchPoints(width);
 
     for(int i = 0; i < width; i++)
       {
@@ -161,7 +161,7 @@ namespace bayesopt
     for(size_t i = 0; i < width; i++)
       {
         vectord xNext = nextPoint(); 
-        double yNext = 0.0; //TODO GET MEAN @ xNEXT
+        double yNext = selectionModel->getMean(xNext);
 
         selectionModel->addSample(xNext, yNext);
         selectionModel->updateCriteria(xNext); //TODO - necessary?

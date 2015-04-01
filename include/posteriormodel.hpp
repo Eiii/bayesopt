@@ -75,6 +75,7 @@ namespace bayesopt {
     void setSamples(const matrixd &x, const vectord &y);
     void setSample(const vectord &x, double y);
     void addSample(const vectord &x, double y);
+    double getMean(const vectord &x);
     double getValueAtMinimum();
     vectord getPointAtMinimum();
 
@@ -93,6 +94,9 @@ namespace bayesopt {
   private:
     PosteriorModel();
   };
+
+  inline double PosteriorModel::getMean(const vectord &x)
+  { return mMean.getMeanFunc()->getMean(x); }
 
   inline vectord PosteriorModel::getPointAtMinimum() 
   { return mData.getPointAtMinimum(); };
