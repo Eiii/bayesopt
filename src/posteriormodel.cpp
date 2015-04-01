@@ -43,6 +43,27 @@ namespace bayesopt
       }
   };
 
+  PosteriorModel* PosteriorModel::clone(randEngine& eng)
+  {
+    //Create the model. Should have same initial state as this object.
+    PosteriorModel *clone = PosteriorModel::create(mDims, mParameters, eng);
+ 
+    //Get our samples from the dataset
+    vecOfvec x = mData.mX;
+    vectord y = mData.mY;
+ 
+    matrixd xm(x.size(), x[0].size());
+    for (size_t i = 0; i < x.size(); i++)
+      {
+        row(xm, i) = x[i];          
+      }
+ 
+    //Update the clone with our samples
+    clone->setSamples(xm, y);
+
+    return clone;
+  }
+
   PosteriorModel::PosteriorModel(size_t dim, bopt_params parameters, 
 				 randEngine& eng):
     mParameters(parameters), mDims(dim), mMean(dim, parameters)
