@@ -156,9 +156,9 @@ namespace bayesopt
   vecOfvec BayesOptBase::nextBatchPoints(int width)
   {
     vecOfvec result;
-    boost::shared_ptr<PosteriorModel> selectionModel = mModel->copy();
+    boost::scoped_ptr<PosteriorModel> selectionModel(mModel->clone(mEngine));
 
-    for(int i = 0; i < width; i++)
+    for(size_t i = 0; i < width; i++)
       {
         vectord xNext = nextPoint(); 
         double yNext = 0.0; //TODO GET MEAN @ xNEXT
