@@ -123,6 +123,15 @@ namespace bayesopt {
      * function defined in evaluateSample.  
      */  
     void stepOptimization();
+    void stepOptimizationFixed(const vectord& xNext);
+
+    /** 
+     * \brief Selects the next point to evaluate according to a certain
+     * criteria or metacriteria
+     *
+     * @return next point to evaluate
+     */
+    vectord nextPoint();  
 
     /** 
      * \brief TODO
@@ -193,14 +202,6 @@ namespace bayesopt {
   private:
 
     BayesOptBase();
-
-    /** 
-     * \brief Selects the next point to evaluate according to a certain
-     * criteria or metacriteria
-     * 
-     * @return next point to evaluate
-     */
-    vectord nextPoint();  
 
     /** 
      * \brief TODO

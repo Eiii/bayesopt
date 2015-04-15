@@ -75,6 +75,12 @@ namespace bayesopt
   {
     // Find what is the next point.
     vectord xNext = nextPoint(); 
+    stepOptimizationFixed(xNext);
+  }
+
+  void BayesOptBase::stepOptimizationFixed(const vectord& next)
+  {
+    vectord xNext = next;
     double yNext = evaluateSampleInternal(xNext);
 
     // If we are stuck in the same point for several iterations, try a random jump!
