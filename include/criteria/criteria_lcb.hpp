@@ -51,6 +51,7 @@ namespace bayesopt
     { 
       return mProc->prediction(x)->lowerConfidenceBound(mBeta); 
     };
+
     std::string name() {return "cLCB";};
   private:
     double mBeta;

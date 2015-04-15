@@ -55,6 +55,11 @@ namespace bayesopt
       return mProc->prediction(x)->negativeExpectedImprovement(min,mExp); 
     };
 
+    double operator() (const vectord &x, double altMin) 
+    { 
+      return mProc->prediction(x)->negativeExpectedImprovement(altMin,mExp); 
+    };
+
     std::string name() {return "cEI";};
 
   private:
@@ -87,6 +92,13 @@ namespace bayesopt
       const double min = mProc->getValueAtMinimum() - mBias/sigma;
       return mProc->prediction(x)->negativeExpectedImprovement(min,mExp); 
     };
+
+    double operator() (const vectord &x, double altMin) 
+    { 
+      const double sigma = mProc->getSignalVariance();
+      return mProc->prediction(x)->negativeExpectedImprovement(altMin,mExp); 
+    };
+
     std::string name() {return "cBEI";};
   private:
     double mBias;
@@ -109,20 +121,30 @@ namespace bayesopt
     { mExp = static_cast<size_t>(params(0)); };
 
     size_t nParameters() {return 1;};
+
     void reset() { nCalls = 1; mExp = 10;};
+
     double operator() (const vectord &x) 
     {
       ProbabilityDistribution* d_ = mProc->prediction(x);
       const double min = mProc->getValueAtMinimum();
       return d_->negativeExpectedImprovement(min,mExp); 
     };
+
+    double operator() (const vectord &x, double altMin) 
+    {
+      ProbabilityDistribution* d_ = mProc->prediction(x);
+      return d_->negativeExpectedImprovement(altMin,mExp); 
+    };
+
     void update(const vectord &x) 
     {
       ++nCalls;
-      if (nCalls % 10)
-	mExp = static_cast<size_t>(ceil(mExp/2.0));
+      if (nCalls % 10) mExp = static_cast<size_t>(ceil(mExp/2.0));
     }
+
     std::string name() {return "cEIa";};
+
   private:
     size_t mExp;
     unsigned int nCalls;

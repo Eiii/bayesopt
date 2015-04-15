@@ -55,6 +55,7 @@ namespace bayesopt
       double sigma2 = d->getStd() * d->getStd();
       return mu + mSqAlpha * (sqrt(sigma2+mGamma) - sqrt(mGamma));
     };
+
     void update(const vectord &x)
     {
       ProbabilityDistribution* d = mProc->prediction(x);
@@ -62,7 +63,9 @@ namespace bayesopt
       double sigma2 = d->getStd() * d->getStd();
       mGamma += sigma2; 
     }
+
     std::string name() {return "cMI";};
+
   private:
     double mSqAlpha;
     double mGamma;

@@ -47,7 +47,12 @@ namespace bayesopt
     virtual void init(NonParametricProcess *proc) { mProc = proc; };
 
     double evaluate(const vectord &x)  {return (*this)(x);}
+    double evaluate(const vectord &x, double altMin)  {return (*this)(x, altMin);}
     virtual double operator() (const vectord &x)  = 0;
+    virtual double operator() (const vectord &x, double altMin) { 
+	    FILE_LOG(logDEBUG) << "Default non-functional altMin criteria";
+      return operator()(x); 
+    };
 
     virtual std::string name() = 0;
     virtual void setParameters(const vectord &params) = 0;

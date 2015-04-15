@@ -140,6 +140,7 @@ namespace bayesopt {
     bopt_params* getParameters();
     double getValueAtMinimum();
     double evaluateCriteria(const vectord& query);
+    double evaluateCriteriaWithMin(const vectord& query, double altMin);
 
   protected:
     vectord getPointAtMinimum();
