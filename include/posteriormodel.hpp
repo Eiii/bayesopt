@@ -74,6 +74,7 @@ namespace bayesopt {
 
     PosteriorModel* clone(randEngine& eng);
     void setSamples(const matrixd &x, const vectord &y);
+    void setSamples(const vecOfvec &x, const vectord &y);
     void setSample(const vectord &x, double y);
     void addSample(const vectord &x, double y);
     double getMean(const vectord &x);

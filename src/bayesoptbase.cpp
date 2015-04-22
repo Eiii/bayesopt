@@ -106,7 +106,7 @@ namespace bayesopt
 	  }
       }
 
-    mModel->addSample(xNext,yNext);
+    addSampleToModel(xNext, yNext);
 
     // Update surrogate model
     bool retrain = ((mParameters.n_iter_relearn > 0) && 
@@ -126,6 +126,49 @@ namespace bayesopt
     mCurrentIter++;
   }
 
+  // TODO -- ehhhh
+  void BayesOptBase::addSample(vectord x, double y)
+  {
+    addSampleToModel(x, y);
+    mModel->updateSurrogateModel();
+    mModel->updateCriteria(x);
+
+    bool retrain = true; // TODO - How should adding an arbitrary, potentially 'useless' sample be handled?
+    if (retrain)  // Full update
+      {
+        mModel->updateHyperParameters();
+        mModel->fitSurrogateModel();
+      }
+  }
+
+  bool BayesOptBase::removeSample(vectord x, double y)
+  {
+    int idx = -1;
+    for (int i = 0; i < mXPoints.size(); i++) {
+      //Make sure mXPoints == x, mYPoints == y
+      bool vec_eq = true;
+      for (int j = 0; j < mXPoints[i].size(); j++) { if (mXPoints[i](j) != x(j)) vec_eq = false; }
+
+      if (vec_eq && mYPoints(i) == y) {
+        idx = i;
+      }
+    }
+
+    if (idx > 0) {
+      mModel.reset(PosteriorModel::create(mDims,mParameters,mEngine));
+      mModel->setSamples(mXPoints, mYPoints);
+      mModel->fitSurrogateModel();
+      bool retrain = true; // TODO - when should we retrain? When shouldn't we? Always?
+      if (retrain) {
+        mModel->updateHyperParameters();
+        mModel->fitSurrogateModel();
+      }
+      return true;
+    } else {
+      return false;
+    }
+  }
+
   void BayesOptBase::stepBatchOptimization(int width)
   {
     // Find what is the next point.
@@ -136,9 +179,9 @@ namespace bayesopt
         vectord xNext = xNexts[i];
         double yNext = evaluateSampleInternal(xNext);
 
-        mModel->addSample(xNext,yNext);
-        mModel->updateSurrogateModel(); //TODO -- Does having these here make sense? Without update
-        mModel->updateCriteria(xNext);  //surrogate, it crashes
+        addSampleToModel(xNext, yNext);
+        mModel->updateSurrogateModel();
+        mModel->updateCriteria(xNext);
 
         plotStepData(mCurrentIter,xNext,yNext); //TODO -- Fix up stuff so this output makes sense
       }
@@ -172,6 +215,10 @@ namespace bayesopt
       }
 
     return result;
+  }
+
+  double BayesOptBase::getMean(vectord x) {
+    return mModel->getMean(x);
   }
 
   void BayesOptBase::initializeOptimization()
@@ -249,6 +296,13 @@ namespace bayesopt
 	findOptimal(Xnext);
       }
     return Xnext;
+  }
+
+  void BayesOptBase::addSampleToModel(vectord x, double y) {
+    mModel->addSample(x,y);
+    mXPoints.push_back(x);
+    mYPoints.resize(mYPoints.size()+1);
+    mYPoints(mYPoints.size()-1) = y;
   }
 
 

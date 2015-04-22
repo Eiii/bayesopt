@@ -136,7 +136,10 @@ namespace bayesopt {
     /** 
      * \brief TODO
      */  
+    void addSample(vectord x, double y);
+    bool removeSample(vectord x, double y);
     void stepBatchOptimization(int width);
+    double getMean(vectord x);
 
     /** Initialize the optimization process.  */
     void initializeOptimization();
@@ -153,6 +156,7 @@ namespace bayesopt {
 
   protected:
     vectord getPointAtMinimum();
+    void addSampleToModel(vectord x, double y);
 
     /** 
      * Print data for every step according to the verbose level
@@ -194,6 +198,8 @@ namespace bayesopt {
     size_t mDims;                                   ///< Number of dimensions
     size_t mCurrentIter;                        ///< Current iteration number
     boost::mt19937 mEngine;                      ///< Random number generator
+    vecOfvec mXPoints;
+    vectord mYPoints;
 
   private:
     boost::scoped_ptr<PosteriorModel> mModel;
