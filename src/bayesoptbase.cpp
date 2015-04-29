@@ -130,6 +130,7 @@ namespace bayesopt
   void BayesOptBase::addSample(vectord x, double y)
   {
     addSampleToModel(x, y);
+    mModel->updateHyperParameters();
     mModel->updateSurrogateModel();
     mModel->updateCriteria(x);
 
@@ -206,19 +207,17 @@ namespace bayesopt
 
     for(size_t i = 0; i < width; i++)
       {
+        selectionModel->fitSurrogateModel();
+
         vectord xNext = nextPoint(); 
+        double yNext = selectionModel->getPrediction(xNext)->getMean();
         result.push_back(xNext);
-        double yNext = selectionModel->getMean(xNext);
 
         selectionModel->addSample(xNext, yNext);
         selectionModel->updateCriteria(xNext); //TODO - necessary?
       }
 
     return result;
-  }
-
-  double BayesOptBase::getMean(vectord x) {
-    return mModel->getMean(x);
   }
 
   void BayesOptBase::initializeOptimization()

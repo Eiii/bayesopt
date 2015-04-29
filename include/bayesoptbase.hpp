@@ -30,7 +30,7 @@
 #include <boost/random.hpp>
 #include "parameters.h"
 #include "specialtypes.hpp"
-//#include "posteriormodel.hpp"
+#include "posteriormodel.hpp"
 
 
 /**
@@ -139,7 +139,6 @@ namespace bayesopt {
     void addSample(vectord x, double y);
     bool removeSample(vectord x, double y);
     void stepBatchOptimization(int width);
-    double getMean(vectord x);
 
     /** Initialize the optimization process.  */
     void initializeOptimization();
