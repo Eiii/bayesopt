@@ -118,6 +118,10 @@ extern "C" {
     char* crit_name;             /**< Name of the criterion */
     double crit_params[128];     /**< Criterion hyperparameters (if needed) */
     size_t n_crit_params;        /**< Number of criterion hyperparameters */
+
+    //HACK
+    const char* init_data;
+    int init_start;
   } bopt_params;
 						    
   /*-----------------------------------------------------------*/

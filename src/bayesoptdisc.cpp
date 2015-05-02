@@ -23,7 +23,11 @@
 
 #include "bayesopt.hpp"
 
+#include <fstream>
+
 #include <boost/numeric/ublas/matrix_proxy.hpp>
+#include <boost/algorithm/string.hpp>
+#include <boost/lexical_cast.hpp>
 //#include "randgen.hpp"
 #include "lhs.hpp"
 #include "gridsampling.hpp"
@@ -99,19 +103,49 @@ namespace bayesopt
   void DiscreteModel::sampleInitialPoints(matrixd& xPoints, vectord& yPoints)
   {
 
-    vecOfvec perms = mInputSet;
-    
-    // By using random permutations, we guarantee that 
-    // the same point is not selected twice
-    utils::randomPerms(perms,mEngine);
-    
-    // vectord xPoint(mInputSet[0].size());
-    for(size_t i = 0; i < yPoints.size(); i++)
-      {
-	const vectord xP = perms[i];
-	row(xPoints,i) = xP;
-	yPoints(i) = evaluateSample(xP);
+    if (mParameters.init_method == 4) { //HACK
+      std::ifstream init_data;
+      FILE_LOG(logINFO) << "Opening init data file";
+      init_data.open(mParameters.init_data);
+
+      //Throw away lines
+      for (int i = 0; i < mParameters.init_start; i++) {
+        init_data.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
       }
+
+      //Read lines
+      for (int i = 0; i < mParameters.n_init_samples; i++) {
+        std::string line;
+        std::getline(init_data, line);
+        std::vector<std::string> coords;
+        boost::split(coords, line, boost::is_any_of(","));
+
+        vectord xP(coords.size());
+        for (int j = 0; j < coords.size(); j++) {
+          xP(j) = boost::lexical_cast<float>(coords.at(j));
+        }
+        row(xPoints, i) = xP;
+
+        yPoints(i) = evaluateSample(xP);
+        FILE_LOG(logINFO) << xP << " -> " << yPoints(i);
+      }
+
+      init_data.close();
+    } else {
+      vecOfvec perms = mInputSet;
+      
+      // By using random permutations, we guarantee that 
+      // the same point is not selected twice
+      utils::randomPerms(perms,mEngine);
+      
+      // vectord xPoint(mInputSet[0].size());
+      for(size_t i = 0; i < yPoints.size(); i++)
+        {
+          const vectord xP = perms[i];
+          row(xPoints,i) = xP;
+          yPoints(i) = evaluateSample(xP);
+        }
+    }
   }
   
 
