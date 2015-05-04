@@ -148,15 +148,30 @@ namespace bayesopt
     for (int i = 0; i < mXPoints.size(); i++) {
       //Make sure mXPoints == x, mYPoints == y
       bool vec_eq = true;
-      for (int j = 0; j < mXPoints[i].size(); j++) { if (mXPoints[i](j) != x(j)) vec_eq = false; }
+      for (int j = 0; j < mXPoints[i].size(); j++) { 
+        if (mXPoints[i](j) != x(j)) {
+          vec_eq = false; 
+          break;
+        }
+      }
 
       if (vec_eq && mYPoints(i) == y) {
         idx = i;
+        break;
+      } else {
       }
     }
 
-    if (idx > 0) {
+    if (idx >= 0) {
       mModel.reset(PosteriorModel::create(mDims,mParameters,mEngine));
+
+      //Remove the points
+      mXPoints.erase(mXPoints.begin() + idx);
+      for (int i = idx; i < mYPoints.size() - 1; i++) {
+        mYPoints(i) = mYPoints(i+1);
+      }
+      mYPoints.resize(mYPoints.size() - 1);
+
       mModel->setSamples(mXPoints, mYPoints);
       mModel->fitSurrogateModel();
       bool retrain = true; // TODO - when should we retrain? When shouldn't we? Always?
