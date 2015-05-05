@@ -131,7 +131,7 @@ namespace bayesopt
   {
     addSampleToModel(x, y);
     mModel->updateHyperParameters();
-    mModel->updateSurrogateModel();
+    mModel->fitSurrogateModel();
     mModel->updateCriteria(x);
 
     bool retrain = true; // TODO - How should adding an arbitrary, potentially 'useless' sample be handled?
@@ -158,7 +158,6 @@ namespace bayesopt
       if (vec_eq && mYPoints(i) == y) {
         idx = i;
         break;
-      } else {
       }
     }
 
@@ -171,9 +170,9 @@ namespace bayesopt
         mYPoints(i) = mYPoints(i+1);
       }
       mYPoints.resize(mYPoints.size() - 1);
+      std::cout << mXPoints.size() << ", " << mYPoints.size() << std::endl;
 
       mModel->setSamples(mXPoints, mYPoints);
-      mModel->fitSurrogateModel();
       bool retrain = true; // TODO - when should we retrain? When shouldn't we? Always?
       if (retrain) {
         mModel->updateHyperParameters();
