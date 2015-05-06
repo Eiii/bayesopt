@@ -170,7 +170,6 @@ namespace bayesopt
         mYPoints(i) = mYPoints(i+1);
       }
       mYPoints.resize(mYPoints.size() - 1);
-      std::cout << mXPoints.size() << ", " << mYPoints.size() << std::endl;
 
       mModel->setSamples(mXPoints, mYPoints);
       bool retrain = true; // TODO - when should we retrain? When shouldn't we? Always?
