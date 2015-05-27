@@ -79,7 +79,9 @@ namespace bayesopt
       mYPoints(other.mYPoints),
       mYPrev(other.mYPrev),
       mCounterStuck(other.mCounterStuck),
-      mModel(other.mModel->clone(mEngine)) { }
+      mModel(other.mModel->clone(mEngine)) { 
+    mModel->fitSurrogateModel();
+  }
 
   void BayesOptBase::stepOptimization()
   {
