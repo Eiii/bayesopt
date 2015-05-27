@@ -71,6 +71,9 @@ namespace bayesopt {
      */
     BayesOptBase(size_t dim, bopt_params params);
 
+    //TODO: Copy constructor
+    BayesOptBase(const BayesOptBase& other);
+
     /** 
      * Default destructor
      */

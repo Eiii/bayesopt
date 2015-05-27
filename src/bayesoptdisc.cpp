@@ -56,7 +56,6 @@ namespace bayesopt
   DiscreteModel::~DiscreteModel()
   {} // Default destructor
 
-
   vectord DiscreteModel::getFinalResult()
   {
     return getPointAtMinimum();

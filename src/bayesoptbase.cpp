@@ -70,6 +70,16 @@ namespace bayesopt
   BayesOptBase::~BayesOptBase()
   { } // Default destructor
 
+  BayesOptBase::BayesOptBase(const BayesOptBase& other) :
+      mParameters(other.mParameters),
+      mDims(other.mDims),
+      mCurrentIter(other.mCurrentIter),
+      mEngine(other.mEngine),
+      mXPoints(other.mXPoints),
+      mYPoints(other.mYPoints),
+      mYPrev(other.mYPrev),
+      mCounterStuck(other.mCounterStuck),
+      mModel(other.mModel->clone(mEngine)) { }
 
   void BayesOptBase::stepOptimization()
   {

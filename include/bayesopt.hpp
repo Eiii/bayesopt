@@ -180,6 +180,10 @@ namespace bayesopt  {
   class BAYESOPT_API DiscreteModel : public BayesOptBase
   {
   public:
+    DiscreteModel(const DiscreteModel& other) : 
+      BayesOptBase(other), mInputSet(other.mInputSet) { };
+
+
     /** 
      * Constructor for real-valued discrete data
      * @param validSet  Set of potential inputs
@@ -193,7 +197,7 @@ namespace bayesopt  {
      * @param params set of parameters (see parameters.h)
      */
     DiscreteModel(const vectori &categories, bopt_params params);
-    
+
     /** Default destructor  */
     virtual ~DiscreteModel();
 
