@@ -86,6 +86,8 @@ namespace bayesopt
      */   
     virtual void updateSurrogateModel() = 0;
 
+    virtual void correlationMatrix(const vecOfvec& v, matrixd& mat, double extra) = 0;
+
 
     // Getters and setters
     double getValueAtMinimum();

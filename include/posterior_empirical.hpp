@@ -70,6 +70,7 @@ namespace bayesopt {
     std::string getBestCriteria(vectord& best);
 
     ProbabilityDistribution* getPrediction(const vectord& query);
+    void correlationMatrix(const vecOfvec& v, matrixd& mat, double extra);
 
   private:
     EmpiricalBayes();
@@ -118,6 +119,10 @@ namespace bayesopt {
 
   inline  ProbabilityDistribution* EmpiricalBayes::getPrediction(const vectord& query)
   { return mGP->prediction(query); };
+
+  inline void EmpiricalBayes::correlationMatrix(const vecOfvec& v, matrixd& mat, double extra) {
+    mGP->correlationMatrix(v, mat, extra);
+  }
 
 
 } //namespace bayesopt

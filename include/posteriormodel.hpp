@@ -70,6 +70,7 @@ namespace bayesopt {
     virtual void setFirstCriterium() = 0;
     virtual bool setNextCriterium(const vectord& prevResult) = 0;
     virtual std::string getBestCriteria(vectord& best) = 0;
+    virtual void correlationMatrix(const vecOfvec& v, matrixd& mat, double extra) = 0;
 
 
     PosteriorModel* clone(randEngine& eng);

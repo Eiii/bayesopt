@@ -69,6 +69,7 @@ namespace bayesopt {
     std::string getBestCriteria(vectord& best);
 
     ProbabilityDistribution* getPrediction(const vectord& query);
+    void correlationMatrix(const vecOfvec& v, matrixd& mat, double extra) { assert(false); } //TODO
 
   private:
     PosteriorFixed();

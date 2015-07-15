@@ -344,6 +344,10 @@ namespace bayesopt
     else return 0.0;
   }
 
+  void BayesOptBase::correlationMatrix(const vecOfvec& v, matrixd& mat, double extra) {
+    mModel->correlationMatrix(v, mat, extra);
+  }
+
   vectord BayesOptBase::getPointAtMinimum() 
   { return mModel->getPointAtMinimum(); };
   

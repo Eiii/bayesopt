@@ -112,7 +112,7 @@ namespace bayesopt
     /** Wrapper of setKernel for C kernel structure */
     void setKernel (kernel_parameters kernel, size_t dim);
 
-    void computeCorrMatrix(const vecOfvec& XX, matrixd& corrMatrix, double nugget);
+    void computeCorrMatrix(const vecOfvec& XX, matrixd& corrMatrix, double nugget) const;
     void computeDerivativeCorrMatrix(const vecOfvec& XX, matrixd& corrMatrix, 
 				    int dth_index);
     vectord computeCrossCorrelation(const vecOfvec& XX, const vectord &query);

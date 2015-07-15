@@ -156,7 +156,7 @@ namespace bayesopt
 
 
   void KernelModel::computeCorrMatrix(const vecOfvec& XX, matrixd& corrMatrix, 
-				     double nugget)
+				     double nugget) const
   {
     assert(corrMatrix.size1() == XX.size());
     assert(corrMatrix.size2() == XX.size());
