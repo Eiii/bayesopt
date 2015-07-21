@@ -140,6 +140,7 @@ namespace bayesopt {
      * \brief TODO
      */  
     void addSample(vectord x, double y);
+    void addSampleToModel(vectord x, double y);
     bool removeSample(vectord x, double y);
     void stepBatchOptimization(int width);
 
@@ -159,7 +160,6 @@ namespace bayesopt {
 
   protected:
     vectord getPointAtMinimum();
-    void addSampleToModel(vectord x, double y);
 
     /** 
      * Print data for every step according to the verbose level
