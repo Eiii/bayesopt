@@ -154,6 +154,12 @@ namespace bayesopt
       }
   }
 
+  void BayesOptBase::updateModel()
+  {
+    mModel->updateHyperParameters();
+    mModel->fitSurrogateModel();
+  }
+
   bool BayesOptBase::removeSample(vectord x, double y)
   {
     int idx = -1;
