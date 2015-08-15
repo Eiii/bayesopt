@@ -146,12 +146,6 @@ namespace bayesopt
     mModel->fitSurrogateModel();
     mModel->updateCriteria(x);
 
-    bool retrain = true; // TODO - How should adding an arbitrary, potentially 'useless' sample be handled?
-    if (retrain)  // Full update
-      {
-        mModel->updateHyperParameters();
-        mModel->fitSurrogateModel();
-      }
   }
 
   void BayesOptBase::updateModel()
