@@ -245,7 +245,7 @@ namespace bayesopt
     return result;
   }
 
-  void BayesOptBase::initializeOptimization()
+  vecOfvec BayesOptBase::initializeOptimization()
   {
     size_t nSamples = mParameters.n_init_samples;
 
@@ -266,6 +266,12 @@ namespace bayesopt
 
 	mCounterStuck = 0;
 	mYPrev = 0.0;
+
+    vecOfvec initial_inputs;
+    for (int i = 0; i < xPoints.size1(); i++) {
+      initial_inputs.push_back(row(xPoints, i));
+    }
+    return initial_inputs;
   }
 
 
