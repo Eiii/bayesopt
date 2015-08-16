@@ -146,7 +146,7 @@ namespace bayesopt {
     void stepBatchOptimization(int width);
 
     /** Initialize the optimization process.  */
-    vecOfvec initializeOptimization();
+    std::pair<vecOfvec, vectord> initializeOptimization();
 
     /** Once the optimization has been perfomed, return the optimal point. */
     virtual vectord getFinalResult() = 0;

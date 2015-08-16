@@ -245,7 +245,7 @@ namespace bayesopt
     return result;
   }
 
-  vecOfvec BayesOptBase::initializeOptimization()
+  std::pair<vecOfvec, vectord> BayesOptBase::initializeOptimization()
   {
     size_t nSamples = mParameters.n_init_samples;
 
@@ -268,10 +268,10 @@ namespace bayesopt
 	mYPrev = 0.0;
 
     vecOfvec initial_inputs;
-    for (int i = 0; i < xPoints.size1(); i++) {
+    for (int i = 0; i < xPoints.size2(); i++) {
       initial_inputs.push_back(row(xPoints, i));
     }
-    return initial_inputs;
+    return std::make_pair(initial_inputs, yPoints);
   }
 
 
