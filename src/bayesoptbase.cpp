@@ -142,8 +142,7 @@ namespace bayesopt
   void BayesOptBase::addSample(vectord x, double y)
   {
     addSampleToModel(x, y);
-    mModel->updateHyperParameters();
-    mModel->fitSurrogateModel();
+    mModel->updateSurrogateModel();
     mModel->updateCriteria(x);
 
   }
