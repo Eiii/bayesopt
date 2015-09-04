@@ -66,6 +66,7 @@ namespace bayesopt {
     void setFirstCriterium();
     bool setNextCriterium(const vectord& prevResult);
     std::string getBestCriteria(vectord& best);
+    virtual void correlationMatrix(const vecOfvec& v, matrixd& mat, double extra) { assert(false); };
 
     ProbabilityDistribution* getPrediction(const vectord& query);
 

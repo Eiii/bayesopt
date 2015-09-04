@@ -99,6 +99,8 @@ namespace bayesopt
     /** Computes the Cholesky decomposition of the Correlation matrix */
     void computeCholeskyCorrelation();
 
+    virtual void correlationMatrix(const vecOfvec& v, matrixd& mat, double extra);
+
 
   protected:
     matrixd mL;             ///< Cholesky decomposition of the Correlation matrix
@@ -209,6 +211,10 @@ namespace bayesopt
     vectord newK(correlation);
     utils::append(newK, selfcorrelation);
     utils::cholesky_add_row(mL,newK);
+  }
+
+  inline void KernelRegressor::correlationMatrix(const vecOfvec& v, matrixd& mat, double extra) {
+    mKernel.computeCorrMatrix(v, mat, extra);
   }
 
   /**@}*/

@@ -197,6 +197,10 @@ namespace bayesopt
     return Xnext;
   }
 
+  void BayesOptBase::correlationMatrix(const vecOfvec& v, matrixd& mat, double extra) {
+    mModel->correlationMatrix(v, mat, extra);
+  }
+
 
   // Potential inline functions. Moved here to simplify API and header
   // structure.
