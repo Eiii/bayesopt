@@ -30,6 +30,7 @@
 #include <boost/random.hpp>
 #include "parameters.h"
 #include "specialtypes.hpp"
+#include "prob_distribution.hpp"
 //#include "posteriormodel.hpp"
 
 
@@ -41,7 +42,6 @@ namespace bayesopt {
 
   //Forward declaration
   class PosteriorModel;
-  class ProbabilityDistribution;
   class Dataset;
 
   /** \addtogroup BayesOpt
