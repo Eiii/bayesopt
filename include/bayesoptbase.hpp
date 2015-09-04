@@ -137,6 +137,14 @@ namespace bayesopt {
     double evaluateCriteria(const vectord& query);
     void correlationMatrix(const vecOfvec& v, matrixd& mat, double extra);
 
+    /** 
+     * \brief Selects the next point to evaluate according to a certain
+     * criteria or metacriteria
+     * 
+     * @return next point to evaluate
+     */
+    vectord nextPoint();  
+
   protected:
     vectord getPointAtMinimum();
 
@@ -188,14 +196,6 @@ namespace bayesopt {
   private:
 
     BayesOptBase();
-
-    /** 
-     * \brief Selects the next point to evaluate according to a certain
-     * criteria or metacriteria
-     * 
-     * @return next point to evaluate
-     */
-    vectord nextPoint();  
 
   };
 
