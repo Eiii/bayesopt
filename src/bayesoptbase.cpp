@@ -120,6 +120,22 @@ namespace bayesopt
     mCurrentIter++;
   }
 
+  std::pair<vecOfvec, vectord> BayesOptBase::getInitialPoints()
+  {
+    size_t nSamples = mParameters.n_init_samples;
+
+    matrixd xPoints(nSamples,mDims);
+    vectord yPoints(nSamples);
+
+    sampleInitialPoints(xPoints,yPoints);
+
+    vecOfvec initial_inputs;
+    for (int i = 0; i < xPoints.size1(); i++) {
+      initial_inputs.push_back(row(xPoints, i));
+    }
+    return std::make_pair(initial_inputs, yPoints);
+  }
+
   void BayesOptBase::initializeOptimization()
   {
     size_t nSamples = mParameters.n_init_samples;
@@ -128,6 +144,33 @@ namespace bayesopt
     vectord yPoints(nSamples);
 
     sampleInitialPoints(xPoints,yPoints);
+    mModel->setSamples(xPoints,yPoints);
+ 
+    if(mParameters.verbose_level > 0)
+      {
+	mModel->plotDataset(logDEBUG);
+      }
+    
+    mModel->updateHyperParameters();
+    mModel->fitSurrogateModel();
+    mCurrentIter = 0;
+
+	mCounterStuck = 0;
+	mYPrev = 0.0;
+  }
+
+  void BayesOptBase::initializeOptimizationWithPoints(const vecOfvec& inputs, const vectord& outputs)
+  {
+    size_t nSamples = inputs.size();
+    assert(nSamples >= 2);
+
+    matrixd xPoints(nSamples,mDims);
+    vectord yPoints = outputs;
+
+    for (int i = 0; i < nSamples; i++) {
+      row(xPoints, i) = inputs.at(i);
+    }
+
     mModel->setSamples(xPoints,yPoints);
  
     if(mParameters.verbose_level > 0)

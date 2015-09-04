@@ -126,6 +126,8 @@ namespace bayesopt {
 
     /** Initialize the optimization process.  */
     void initializeOptimization();
+    void initializeOptimizationWithPoints(const vecOfvec& inputs, const vectord& outputs);
+    std::pair<vecOfvec, vectord> getInitialPoints();
 
     /** Once the optimization has been perfomed, return the optimal point. */
     virtual vectord getFinalResult() = 0;
