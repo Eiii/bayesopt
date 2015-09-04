@@ -32,6 +32,7 @@
 #include <boost/numeric/ublas/matrix.hpp>
 #include <boost/numeric/ublas/io.hpp>
 #include "bayesopt/parameters.hpp"
+#include "prob_distribution.hpp"
 
 
 /**
@@ -133,7 +134,9 @@ namespace bayesopt {
 
     /** Initialize the optimization process.  */
     void initializeOptimization();
-    
+    void initializeOptimizationWithPoints(const vecOfvec& inputs, const vectord& outputs);
+    std::pair<vecOfvec, vectord> getInitialPoints();
+
     /** Once the optimization has been perfomed, return the optimal point. */
     vectord getFinalResult();
 
