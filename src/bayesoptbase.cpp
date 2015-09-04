@@ -267,7 +267,7 @@ namespace bayesopt
 	mYPrev = 0.0;
 
     vecOfvec initial_inputs;
-    for (int i = 0; i < xPoints.size2(); i++) {
+    for (int i = 0; i < xPoints.size1(); i++) {
       initial_inputs.push_back(row(xPoints, i));
     }
     return std::make_pair(initial_inputs, yPoints);
