@@ -135,6 +135,7 @@ namespace bayesopt {
     bopt_params* getParameters();
     double getValueAtMinimum();
     double evaluateCriteria(const vectord& query);
+    double evaluateCriteriaWithMin(const vectord& query, double altMin);
     void correlationMatrix(const vecOfvec& v, matrixd& mat, double extra);
 
     /** 

@@ -55,6 +55,11 @@ namespace bayesopt
       return mProc->prediction(x)->negativeExpectedImprovement(min,mExp); 
     };
 
+    double operator() (const vectord &x, double altMin) 
+    { 
+      return mProc->prediction(x)->negativeExpectedImprovement(altMin,mExp); 
+    };
+
     std::string name() {return "cEI";};
 
   private:

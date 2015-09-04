@@ -47,7 +47,9 @@ namespace bayesopt
     virtual void init(NonParametricProcess *proc) { mProc = proc; };
 
     double evaluate(const vectord &x)  {return (*this)(x);}
+    double evaluate(const vectord &x, double altMin)  {return (*this)(x, altMin);}
     virtual double operator() (const vectord &x)  = 0;
+    virtual double operator() (const vectord &x, double altMin) { assert(false); return 0.0; };
 
     virtual std::string name() = 0;
     virtual void setParameters(const vectord &params) = 0;

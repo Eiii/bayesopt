@@ -210,6 +210,12 @@ namespace bayesopt
     else return 0.0;
   }
 
+  double BayesOptBase::evaluateCriteriaWithMin(const vectord& query, double altMin)
+  {
+    if (checkReachability(query)) return mModel->evaluateCriteriaWithMin(query, altMin);
+    else return 0.0;
+  }
+
   vectord BayesOptBase::getPointAtMinimum() 
   { return mModel->getPointAtMinimum(); };
   
