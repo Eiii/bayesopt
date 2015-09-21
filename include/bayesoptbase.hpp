@@ -139,6 +139,7 @@ namespace bayesopt {
     double evaluateCriteria(const vectord& query);
     double evaluateCriteriaWithMin(const vectord& query, double altMin);
     void correlationMatrix(const vecOfvec& v, matrixd& mat, double extra);
+    double getKernelParameter();
 
     /** 
      * \brief Selects the next point to evaluate according to a certain

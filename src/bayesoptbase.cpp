@@ -244,6 +244,12 @@ namespace bayesopt
     mModel->correlationMatrix(v, mat, extra);
   }
 
+  //TODO: This is just a temporary 'hack'-y function to examine the internal
+  //state of the optimization for debugging purposes
+  double BayesOptBase::getKernelParameter() {
+    return 0.0;
+  }
+
 
   // Potential inline functions. Moved here to simplify API and header
   // structure.
