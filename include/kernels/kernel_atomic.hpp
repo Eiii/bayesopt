@@ -60,6 +60,8 @@ namespace bayesopt
     };
     size_t nHyperParameters() {return n_params;};
 
+    virtual double DEBUG_KernelParameter() const { return params(0); };
+
     virtual ~AtomicKernel(){};
 
   protected:
