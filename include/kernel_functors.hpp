@@ -54,6 +54,7 @@ namespace bayesopt
     virtual double operator()( const vectord &x1, const vectord &x2 ) = 0;
     virtual double gradient( const vectord &x1, const vectord &x2,
 			     size_t component ) = 0;
+    virtual double DEBUG_KernelParameter() const { return -1.337; };
 
   protected:
     size_t n_inputs;
@@ -120,6 +121,7 @@ namespace bayesopt
 				 vectord& knx);
     double computeSelfCorrelation(const vectord& query);
     double kernelLogPrior();
+    double DEBUG_KernelParameter() const { return mKernel->DEBUG_KernelParameter(); };
 
   private:
     /** Set prior (Gaussian) for kernel hyperparameters */

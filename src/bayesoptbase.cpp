@@ -25,6 +25,7 @@
 
 #include "log.hpp"
 #include "posteriormodel.hpp"
+#include "posterior_empirical.hpp" //DEBUG: Needs to be included for kernel param. hack
 
 
 namespace bayesopt
@@ -247,7 +248,9 @@ namespace bayesopt
   //TODO: This is just a temporary 'hack'-y function to examine the internal
   //state of the optimization for debugging purposes
   double BayesOptBase::getKernelParameter() {
-    return 0.0;
+    const EmpiricalBayes& model = dynamic_cast<const EmpiricalBayes&>(*mModel);
+    double val = model.DEBUG_KernelParameter();
+    return val;
   }
 
 

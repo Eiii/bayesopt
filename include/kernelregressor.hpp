@@ -74,6 +74,7 @@ namespace bayesopt
     size_t nHyperParameters();
     vectord getHyperParameters();
     void setHyperParameters(const vectord& theta);
+    double DEBUG_KernelParameter() const { return mKernel.DEBUG_KernelParameter(); };
 
     /** Sets the kind of learning methodology for kernel hyperparameters */
     //void setLearnType(learning_type l_type);

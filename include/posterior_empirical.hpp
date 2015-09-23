@@ -28,6 +28,7 @@
 #include <boost/scoped_ptr.hpp>
 #include "criteria_functors.hpp"
 #include "posteriormodel.hpp"
+#include "kernelregressor.hpp" //DEBUG: Just needed for kernel param. hack
 
 namespace bayesopt {
 
@@ -69,6 +70,7 @@ namespace bayesopt {
     bool setNextCriterium(const vectord& prevResult);
     std::string getBestCriteria(vectord& best);
     virtual void correlationMatrix(const vecOfvec& v, matrixd& mat, double extra);
+    double DEBUG_KernelParameter() const;
 
     ProbabilityDistribution* getPrediction(const vectord& query);
 
@@ -122,6 +124,11 @@ namespace bayesopt {
 
   inline void EmpiricalBayes::correlationMatrix(const vecOfvec& v, matrixd& mat, double extra) {
     mGP->correlationMatrix(v, mat, extra);
+  }
+
+  inline double EmpiricalBayes::DEBUG_KernelParameter() const { 
+    const KernelRegressor& kernel_reg = dynamic_cast<const KernelRegressor&>(*mGP);
+    return kernel_reg.DEBUG_KernelParameter();
   }
 
 
