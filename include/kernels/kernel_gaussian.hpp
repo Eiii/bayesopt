@@ -59,7 +59,7 @@ namespace bayesopt
   {
   public:
     void init(size_t input_dim)
-    { n_params = 0; n_inputs = input_dim;  };
+    { n_params = 1; n_inputs = input_dim;  };
 
     inline double computeFixedNorm2(const vectord &x1, const vectord &x2)
     {  
