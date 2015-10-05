@@ -66,6 +66,7 @@ namespace bayesopt
 
     registry["kSEARD"] = & create_func<SEArd>;
     registry["kSEISO"] = & create_func<SEIso>;
+    registry["kSEISOfixed"] = & create_func<SEIso_fixed>;
 
     registry["kRQISO"] = & create_func<RQIso>;
 

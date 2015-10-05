@@ -54,6 +54,36 @@ namespace bayesopt
     };
   };
 
+  /** \brief Square exponential (Gaussian) kernel. Fixed-length isotropic version. */
+  class SEIso_fixed: public ISOkernel
+  {
+  public:
+    void init(size_t input_dim)
+    { n_params = 0; n_inputs = input_dim;  };
+
+    inline double computeFixedNorm2(const vectord &x1, const vectord &x2)
+    {  
+      assert(n_inputs == x1.size());
+      assert(x1.size() == x2.size());
+      double length = 0.05;
+      return norm_2(x1-x2)/length; 
+    };
+
+    double operator()( const vectord &x1, const vectord &x2)
+    {
+      double rl = computeFixedNorm2(x1,x2);
+      double k = rl*rl;
+      return exp(-k/2);
+    };
+
+    double gradient(const vectord &x1, const vectord &x2,
+		    size_t component)
+    {
+      double rl = computeFixedNorm2(x1,x2);
+      double k = rl*rl;
+      return exp(-k/2)*k;
+    };
+  };
 
   /** \brief Square exponential (Gaussian) kernel. ARD version. */
   class SEArd: public ARDkernel
