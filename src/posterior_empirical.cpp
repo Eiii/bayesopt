@@ -62,13 +62,14 @@ namespace bayesopt
 
   void EmpiricalBayes::updateHyperParameters()
   {
-    FILE_LOG(logDEBUG) << "------ Optimizing hyperparameters ------";
-    vectord optimalTheta = mGP->getHyperParameters();
-
-    FILE_LOG(logDEBUG) << "Initial hyper parameters: " << optimalTheta;
-    kOptimizer->run(optimalTheta);
-    mGP->setHyperParameters(optimalTheta);
-    FILE_LOG(logDEBUG) << "Final hyper parameters: " << optimalTheta;	
+    if (mGP->nHyperParameters() != 0) {
+      FILE_LOG(logDEBUG) << "------ Optimizing hyperparameters ------";
+      vectord optimalTheta = mGP->getHyperParameters();
+      FILE_LOG(logDEBUG) << "Initial hyper parameters: " << optimalTheta;
+      kOptimizer->run(optimalTheta);
+      mGP->setHyperParameters(optimalTheta);
+      FILE_LOG(logDEBUG) << "Final hyper parameters: " << optimalTheta;	
+    }
   };
 
 
