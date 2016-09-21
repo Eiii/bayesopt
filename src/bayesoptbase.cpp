@@ -471,7 +471,10 @@ namespace bayesopt
     return Xnext;
   }
 
-
+  vectord BayesOptBase::lastPoint()
+  {
+    return mModel->getData()->getLastSampleX();
+  }
 
 } //namespace bayesopt
 

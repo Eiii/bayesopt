@@ -150,6 +150,7 @@ namespace bayesopt {
     ProbabilityDistribution* getPrediction(const vectord& query);
     const Dataset* getData();
     Parameters* getParameters();
+    vectord lastPoint();
     double getValueAtMinimum();
     size_t getCurrentIter();
     double evaluateCriteria(const vectord& query);
