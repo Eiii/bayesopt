@@ -29,6 +29,7 @@
 #include "specialtypes.hpp"
 #include "bopt_state.hpp"
 
+#include "boharness_timers.h"
 
 namespace bayesopt
 {
@@ -139,6 +140,8 @@ namespace bayesopt
     bool retrain = ((mParameters.n_iter_relearn > 0) && 
 		    ((mCurrentIter + 1) % mParameters.n_iter_relearn == 0));
 
+    //Added model timer
+    model_timer.Start();
     if (retrain)  // Full update
       {
         mModel->updateHyperParameters();
@@ -148,9 +151,15 @@ namespace bayesopt
       {
         mModel->updateSurrogateModel();
       } 
+    model_timer.Stop();
 
     plotStepData(mCurrentIter,xNext,yNext);
+
+    //Added crit timer
+    crit_timer.Start();
     mModel->updateCriteria(xNext);
+    crit_timer.Stop();
+
     mCurrentIter++;
     
     // Save state if required

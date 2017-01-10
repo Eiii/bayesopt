@@ -24,6 +24,10 @@ CMAKE_MINIMUM_REQUIRED(VERSION 2.6)
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} 
 		      ${CMAKE_CURRENT_SOURCE_DIR}/cmake)
 
+set(OPTCMP_INCLUDES ${CMAKE_SOURCE_DIR}/include)
+message(STATUS ${OPTCMP_INCLUDES})
+include_directories(${OPTCMP_INCLUDES})
+
 if(APPLE)
   # For macports or similar systems
   set(CMAKE_LIBRARY_PATH ${CMAKE_LIBRARY_PATH} /opt/local/lib /opt/local/Library)
