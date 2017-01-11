@@ -108,7 +108,10 @@ namespace bayesopt
   void BayesOptBase::stepOptimization()
   {
     // Find what is the next point.
+    crit_timer.Start();
     vectord xNext = nextPoint(); 
+    crit_timer.Stop();
+
     double yNext = evaluateSampleInternal(xNext);
 
     // If we are stuck in the same point for several iterations, try a random jump!
