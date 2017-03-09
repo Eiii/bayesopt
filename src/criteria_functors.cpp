@@ -54,6 +54,7 @@ namespace bayesopt
     registry["cEIa"] = & create_func<AnnealedExpectedImprovement>;
     registry["cLCB"] = & create_func<LowerConfidenceBound>;
     registry["cLCBa"] = & create_func<AnnealedLowerConfindenceBound>;
+    registry["cLCBk"] = & create_func<KandasamyLowerConfindenceBound>;
     registry["cPOI"] = & create_func<ProbabilityOfImprovement>;
     registry["cAopt"] = & create_func<GreedyAOptimality>;
     registry["cExpReturn"] = & create_func<ExpectedReturn>;

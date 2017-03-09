@@ -90,6 +90,37 @@ namespace bayesopt
     unsigned int nCalls;
   };
 
+  /// Lower (upper) confidence bound using Srinivas annealing \cite Srinivas10
+  class KandasamyLowerConfindenceBound: public Criteria
+  {
+  public:
+    virtual ~KandasamyLowerConfindenceBound(){};
+    void init(NonParametricProcess* proc)
+    { 
+      mProc = proc;
+      reset();
+    };
+
+    void setParameters(const vectord &params)
+    { mCoef = params(0); };
+
+    size_t nParameters() {return 1;};
+    void reset() { nCalls = 1; mCoef = 0.2;};
+    double operator() (const vectord &x) 
+    {
+      size_t nDims = x.size();
+      double beta = mCoef * static_cast<double>(nDims) * log(2.0 * nCalls);
+      ProbabilityDistribution* d_ = mProc->prediction(x);
+      return d_->lowerConfidenceBound(beta); 
+    };
+    void update(const vectord &x) { ++nCalls; }
+
+    std::string name() {return "cLCBk";};
+  private:
+    double mCoef;
+    unsigned int nCalls;
+  };
+
   //@}
 
 } //namespace bayesopt
