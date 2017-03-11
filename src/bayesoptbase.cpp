@@ -260,8 +260,13 @@ namespace bayesopt
     for (size_t i = 0; i < nSamples; i++) {
       row(xPoints, i) = inputs.at(i);
     }
+    saveInitialSamples(xPoints);
+    mModel->setSamples(xPoints);
 
-    mModel->setSamples(xPoints,yPoints);
+    for (size_t i = 0; i < yPoints.size(); i++) {
+      saveResponse(yPoints[i], i==0);
+    }
+    mModel->setSamples(yPoints);
  
     if(mParameters.verbose_level > 0)
       {
