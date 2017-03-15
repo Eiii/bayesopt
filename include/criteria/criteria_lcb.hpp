@@ -90,7 +90,6 @@ namespace bayesopt
     unsigned int nCalls;
   };
 
-  /// Lower (upper) confidence bound using Srinivas annealing \cite Srinivas10
   class KandasamyLowerConfindenceBound: public Criteria
   {
   public:
@@ -109,7 +108,7 @@ namespace bayesopt
     double operator() (const vectord &x) 
     {
       size_t nDims = x.size();
-      double beta = mCoef * static_cast<double>(nDims) * log(2.0 * nCalls);
+      double beta = sqrt(mCoef * static_cast<double>(nDims) * log(2.0 * nCalls));
       ProbabilityDistribution* d_ = mProc->prediction(x);
       return d_->lowerConfidenceBound(beta); 
     };
@@ -118,6 +117,37 @@ namespace bayesopt
     std::string name() {return "cLCBk";};
   private:
     double mCoef;
+    unsigned int nCalls;
+  };
+
+  class KrauseLowerConfindenceBound: public Criteria
+  {
+  public:
+    virtual ~KrauseLowerConfindenceBound(){};
+    void init(NonParametricProcess* proc)
+    { 
+      mProc = proc;
+      reset();
+    };
+
+    void setParameters(const vectord &params)
+    { mDelta = params(0); mCoef = params(1); };
+
+    size_t nParameters() {return 2;};
+    void reset() { nCalls = 1; mDelta = 0.1; mCoef = 0.2;};
+    double operator() (const vectord &x) 
+    {
+      size_t nDims = x.size();
+      double beta = sqrt(2.0 * log((nDims * pow(nCalls, 2.0) * pow(M_PI, 2.0))/(6.0 * mDelta)));
+      beta *= mCoef;
+      ProbabilityDistribution* d_ = mProc->prediction(x);
+      return d_->lowerConfidenceBound(beta); 
+    };
+    void update(const vectord &x) { ++nCalls; }
+
+    std::string name() {return "cLCBkrause";};
+  private:
+    double mDelta, mCoef;
     unsigned int nCalls;
   };
 
