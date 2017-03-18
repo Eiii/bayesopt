@@ -134,7 +134,7 @@ namespace bayesopt
     { mDelta = params(0); mCoef = params(1); };
 
     size_t nParameters() {return 2;};
-    void reset() { nCalls = 1; mDelta = 0.1; mCoef = 0.2;};
+    void reset() { nCalls = 1; mDelta = 0.1; mCoef = 1.0;};
     double operator() (const vectord &x) 
     {
       size_t nDims = x.size();
