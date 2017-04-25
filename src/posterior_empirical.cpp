@@ -50,7 +50,7 @@ namespace bayesopt
     else
       {
 	kOptimizer->setAlgorithm(COMBINED);
-	kOptimizer->setMaxEvals(20*nhp);
+	kOptimizer->setMaxEvals(5*nhp);
       }
     //Limits in log space
     kOptimizer->setLimits(svectord(nhp,-6.0),svectord(nhp,1.0));
